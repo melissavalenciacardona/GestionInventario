@@ -34,6 +34,8 @@ namespace LabSoft.Controllers
             return Ok(cliente);
         }
 
+        
+
         [HttpPost]
         public ActionResult Post([FromBody] Cliente cliente)
         {

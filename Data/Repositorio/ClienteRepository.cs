@@ -14,12 +14,16 @@ namespace LabSoft.Data.Repositorio
                 {
                     Id = i.ToString(),
                     Nombre = nombre,
+                    Apellido = DataGenerator.GenerateRandomLastName(),
+                    TipoDocumento = DataGenerator.GenerateRandomDNIType(),
+                    NumeroDocumento = DataGenerator.GenerateRandomDNI(),
                     Email = DataGenerator.GenerateRandomEmail(nombre),
                     Telefono = DataGenerator.GenerateRandomPhone(),
                     Direccion = DataGenerator.GenerateRandomAddress(),
                     FechaRegistro = DateTime.UtcNow.AddDays(-1),
                     Estado = "Activo",
-                    Preferencia = DataGenerator.GenerateRandomPreferences()
+                    Preferencia = DataGenerator.GenerateRandomPreferences(),
+                    Password = DataGenerator.GenerateRandomPassword()
                 });
             }
         }
@@ -44,6 +48,12 @@ namespace LabSoft.Data.Repositorio
             return cliente;
         }
 
+        public Cliente? GetClienteByEmail(string Email)
+        {
+            var cliente = clientes.FirstOrDefault(c => c.Email == Email);
+            return cliente;
+        }
+
         public List<Cliente> GetClientes()
         {
             return clientes;
@@ -57,6 +67,15 @@ namespace LabSoft.Data.Repositorio
                 clientes[indice] = cliente;
             }
 
+        }
+
+        public void UpdateClienteState(string id, string state)
+        {
+            var cliente = clientes.FirstOrDefault(c => c.Id == id);
+            if (cliente != null && cliente.Estado != state && (state == "Activo" || state == "Inactivo"))
+            {
+                cliente.Estado = state;
+            }
         }
     }
 }

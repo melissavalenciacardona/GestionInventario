@@ -25,6 +25,11 @@ namespace LabSoft.Data.Negocio.Servicios {
             return _clienteRepository.GetClienteById(id);
         }
 
+        public Cliente? GetClienteByEmail(string Email)
+        {
+            return _clienteRepository.GetClienteByEmail(Email);
+        }
+
         public List<Cliente> GetClientes()
         {
             return _clienteRepository.GetClientes();
@@ -33,6 +38,21 @@ namespace LabSoft.Data.Negocio.Servicios {
         public void UpdateCliente(Cliente cliente)
         {
             _clienteRepository.UpdateCliente(cliente);
+        }
+
+        public void UpdateClienteState(string id, string state)
+        {
+            _clienteRepository.UpdateClienteState(id, state);
+        }
+
+        public bool ValidateCliente(string email, string password)
+        {
+            var cliente = _clienteRepository.GetClienteByEmail(email);
+            if (cliente != null)
+            {
+                return cliente.Password == password;
+            }
+            return false;
         }
     }
 }
