@@ -23,7 +23,7 @@ namespace LabSoft.Controllers
             return Ok(clientes); //returno ok() devulve 200
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public ActionResult<Cliente> Get(string id)
         {
             var cliente = _clienteService.GetClienteById(id);
@@ -34,7 +34,16 @@ namespace LabSoft.Controllers
             return Ok(cliente);
         }
 
-        
+        [HttpGet("email/{email}")]
+        public ActionResult<Cliente> GetByEmail(string email)
+        {
+            var cliente = _clienteService.GetClienteByEmail(email);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return Ok(cliente);
+        }
 
         [HttpPost]
         public ActionResult Post([FromBody] Cliente cliente)
@@ -63,6 +72,7 @@ namespace LabSoft.Controllers
             }
 
             _clienteService.UpdateCliente(cliente);
+            _clienteService.UpdateClienteState(id, cliente.Estado);
             return NoContent();
         }
 
