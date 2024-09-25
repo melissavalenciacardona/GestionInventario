@@ -9,21 +9,21 @@ namespace LabSoft.Controllers
     [Route("verification/[controller]")]
     public class Autenticarcontroller : ControllerBase
     {
-        private readonly IClienteService _clienteService; //Instancias
+        private readonly IUsuarioService _usuarioService; //Instancias
 
-        public Autenticarcontroller(IClienteService clienteService)
+        public Autenticarcontroller(IUsuarioService usuarioService)
         {
-            _clienteService = clienteService;
+            _usuarioService = usuarioService;
         }
 
         [HttpPost]
         public ActionResult Post( string email, string password)
         {
-            var valido = _clienteService.ValidateCliente(email, password);
+            var valido = _usuarioService.ValidateUsuario(email, password);
             if (valido)
             {
-                var cliente = _clienteService.GetClienteByEmail(email);
-                var mensaje = $"Bienvenid@ {cliente.Nombre} {cliente.Apellido}";
+                var usuario = _usuarioService.GetUsuarioByEmail(email);
+                var mensaje = $"Bienvenid@ {usuario.Nombre} {usuario.Apellido}";
                 var response = new { Autenticacion = valido, 
                                 jwt = Guid.NewGuid().ToString(), 
                                 mensaje = mensaje};

@@ -1,6 +1,6 @@
 namespace LabSoft.Data
 {
-    public class Cliente
+    public class Usuario
     {
         public string Id { get; set; }
         public string Nombre { get; set; }
