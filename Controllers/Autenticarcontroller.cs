@@ -17,12 +17,12 @@ namespace LabSoft.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post( string email, string password)
+        public ActionResult Post([FromBody] UsuarioLogin usuarioLogin)
         {
-            var valido = _usuarioService.ValidateUsuario(email, password);
+            var valido = _usuarioService.ValidateUsuario(usuarioLogin.Email, usuarioLogin.Password);
             if (valido)
             {
-                var usuario = _usuarioService.GetUsuarioByEmail(email);
+                var usuario = _usuarioService.GetUsuarioByEmail(usuarioLogin.Email);
                 var mensaje = $"Bienvenid@ {usuario.Nombre} {usuario.Apellido}";
                 var response = new { Autenticacion = valido, 
                                 jwt = Guid.NewGuid().ToString(), 
