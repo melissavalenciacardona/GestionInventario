@@ -12,6 +12,10 @@ namespace LabSoft.Data.Negocio.Servicios {
 
         public void AddUsuario(Usuario usuario)
         {
+            usuario.Id = Guid.NewGuid().ToString();
+            usuario.Estado = "1";
+            usuario.FechaRegistro = DateTime.Now;
+
             _usuarioRepository.AddUsuario(usuario);
         }
 
@@ -37,7 +41,19 @@ namespace LabSoft.Data.Negocio.Servicios {
 
         public void UpdateUsuario(Usuario usuario)
         {
-            _usuarioRepository.UpdateUsuario(usuario);
+            var usuarioToUpdate = _usuarioRepository.GetUsuarioById(usuario.Id);
+            if(usuarioToUpdate != null)
+            {
+                usuarioToUpdate.Nombre = usuario.Nombre;
+                usuarioToUpdate.Apellido = usuario.Apellido;
+                usuarioToUpdate.TipoDocumento = usuario.TipoDocumento;
+                usuarioToUpdate.NumeroDocumento = usuario.NumeroDocumento;
+                usuarioToUpdate.Email = usuario.Email;
+                usuarioToUpdate.Telefono = usuario.Telefono;
+
+                _usuarioRepository.UpdateUsuario(usuario);
+            }
+            
         }
 
         public void UpdateUsuarioState(string id, string state)

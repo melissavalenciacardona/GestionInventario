@@ -19,7 +19,5 @@ namespace LabSoft.Data
         public Preferencia Preferencia { get; set; }
 
         public string Password { get; set; }
-
-
     }
 }

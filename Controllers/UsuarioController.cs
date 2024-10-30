@@ -1,60 +1,126 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using LabSoft.Data.Negocio.Servicios;
 using System.Collections.Generic;
 using LabSoft.Data;
+using LabSoft.DTOs;
 
 namespace LabSoft.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsuariosController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService; //Instancias
+        private readonly IMapper _mapper;
 
-        public UsuariosController(IUsuarioService usuarioService)
-        {
+        public UsuarioController(IUsuarioService usuarioService, IMapper mapper){
             _usuarioService = usuarioService;
+            _mapper = mapper;
         }
+        // public UsuarioController(IUsuarioService usuarioService)
+        // {
+        //     _usuarioService = usuarioService;
+        // }
 
         [HttpGet]
-        public ActionResult<List<Usuario>> Get()
+        public ActionResult<List<UsuarioResponseDTO>> Get()
         {
-            var usuarios = _usuarioService.GetUsuarios();
-            return Ok(usuarios); //returno ok() devulve 200
+            try {
+                var usuarios = _usuarioService.GetUsuarios();
+                var usuarioResponse = _mapper.Map<List<Usuario>, List<UsuarioResponseDTO>>(usuarios);
+                return Ok(usuarioResponse);
+
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //return BadRequest(ex.Message);
+                return StatusCode(500, 
+                    new {
+                            mensaje = "Ocurrio un error interno en el servidor", 
+                            detalles = ex.Message
+                        }
+                );
+            }
         }
 
-        [HttpGet("id/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<Usuario> Get(string id)
         {
-            var usuario = _usuarioService.GetUsuarioById(id);
-            if (usuario == null)
+            try
             {
-                return NotFound();
+                var usuario = _usuarioService.GetUsuarioById(id);
+
+                if(usuario == null)
+                {
+                    return NotFound();
+                }
+                return Ok(usuario);
             }
-            return Ok(usuario);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //return BadRequest(ex.Message);
+                return StatusCode(500, 
+                    new {
+                            mensaje = "Ocurrio un error interno en el servidor", 
+                            detalles = ex.Message
+                        }
+                );
+            }
         }
 
         [HttpGet("email/{email}")]
         public ActionResult<Usuario> GetByEmail(string email)
         {
-            var usuario = _usuarioService.GetUsuarioByEmail(email);
-            if (usuario == null)
+            try
             {
-                return NotFound();
+                var usuario = _usuarioService.GetUsuarioByEmail(email);
+
+                if(usuario == null)
+                {
+                    return NotFound();
+                }
+                return Ok(usuario);
             }
-            return Ok(usuario);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //return BadRequest(ex.Message);
+                return StatusCode(500, 
+                    new {
+                            mensaje = "Ocurrio un error interno en el servidor", 
+                            detalles = ex.Message
+                        }
+                );
+            }
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Usuario usuario)
+        public ActionResult Post([FromBody] UsuarioRequestDTO usuario)
         {
-            if (usuario == null)
+            try
             {
-                return BadRequest();
-            }
+                if(usuario == null){
+                    return  BadRequest("El usuario no puede ser nulo");
+                }
 
-            _usuarioService.AddUsuario(usuario);
-            return CreatedAtAction(nameof(Get), new { id = usuario.Id }, usuario);
+                var usuarioMapeado = _mapper.Map<UsuarioRequestDTO, Usuario>(usuario);
+
+                _usuarioService.AddUsuario(usuarioMapeado);
+                return CreatedAtAction(nameof(Get), new {id = usuarioMapeado.Id}, usuario);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //return BadRequest(ex.Message);
+                return StatusCode(500, 
+                    new {
+                            mensaje = "Ocurrio un error interno en el servidor", 
+                            detalles = ex.Message
+                        }
+                );
+            }
         }
 
         [HttpPut("{id}")]

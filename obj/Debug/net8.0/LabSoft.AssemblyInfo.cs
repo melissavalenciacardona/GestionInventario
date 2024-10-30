@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("LabSoft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d422a12ab26b988e39b09b38602d366f132cb40c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e2d6e015d7d401bab8832ee8be79fcf186bf5ab")]
 [assembly: System.Reflection.AssemblyProductAttribute("LabSoft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LabSoft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
