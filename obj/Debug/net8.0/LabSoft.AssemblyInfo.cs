@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LabSoft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14c123c2880aee11bfd10f9e6a7193a444fc18bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43f66e05d5a8e077d45a013c1e14f0c19fdc626b")]
 [assembly: System.Reflection.AssemblyProductAttribute("LabSoft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LabSoft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
