@@ -18,12 +18,15 @@ namespace LabSoft.Data.Repositorio
 
         public List<Direccion> GetDireccion()
         {
-            throw new NotImplementedException();
+            var direcciones = _context.Direccion.ToList();
+            return direcciones;
         }
 
         public Direccion? GetDireccionById(string id)
         {
-            throw new NotImplementedException();
+            var result = _context.Direccion
+            .FirstOrDefault(direccionId => direccionId.Id.Equals(id));
+            return result;
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using LabSoft.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabSoft.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241104204853_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,71 +144,10 @@ namespace LabSoft.Migrations
                     b.ToTable("Preferencia");
                 });
 
-            modelBuilder.Entity("LabSoft.Data.Producto", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FechaExpiracion")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<decimal>("Precio")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProveedorId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProveedorId");
-
-                    b.ToTable("Producto");
-                });
-
-            modelBuilder.Entity("LabSoft.Data.Proveedor", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("DireccionId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DireccionId");
-
-                    b.ToTable("Proveedor");
-                });
-
             modelBuilder.Entity("LabSoft.Data.Usuario", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<string>("DireccionId")
                         .IsRequired()
@@ -226,23 +168,11 @@ namespace LabSoft.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("NumeroDocumento")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("PreferenciaId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("TipoDocumento")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -385,28 +315,6 @@ namespace LabSoft.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("LabSoft.Data.Producto", b =>
-                {
-                    b.HasOne("LabSoft.Data.Proveedor", "Proveedor")
-                        .WithMany()
-                        .HasForeignKey("ProveedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Proveedor");
-                });
-
-            modelBuilder.Entity("LabSoft.Data.Proveedor", b =>
-                {
-                    b.HasOne("LabSoft.Data.Direccion", "Direccion")
-                        .WithMany()
-                        .HasForeignKey("DireccionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Direccion");
                 });
 
             modelBuilder.Entity("LabSoft.Data.Usuario", b =>

@@ -9,10 +9,12 @@ namespace LabSoft.Data
         {
         }
 
-        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Direccion> Direccion { get; set; }
         public DbSet<Preferencia> Preferencia { get; set; }
 
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
             optionsBuilder.UseMySQL();
         }

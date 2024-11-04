@@ -8,22 +8,22 @@ namespace LabSoft.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClienteController : ControllerBase
+    public class ProveedorController : ControllerBase
     {
-        private readonly IClienteService _clienteService;
+        private readonly IProveedorService _proveedorService;
         private readonly IMapper _mapper;
 
-        public ClienteController(IClienteService clienteService, IMapper mapper){
-            _clienteService = clienteService;
+        public ProveedorController(IProveedorService proveedorService, IMapper mapper){
+            _proveedorService = proveedorService;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<ClienteResponseDTO>> Get(){
+        public ActionResult<List<ProveedorResponseDTO>> Get(){
             try {
-                var clientes = _clienteService.GetClientes();
-                var clientesResponse = _mapper.Map<List<Cliente>, List<ClienteResponseDTO>>(clientes);
-                return Ok(clientesResponse);
+                var proveedors = _proveedorService.GetProveedores();
+                var proveedorsResponse = _mapper.Map<List<Proveedor>, List<ProveedorResponseDTO>>(proveedors);
+                return Ok(proveedorsResponse);
 
             } catch (Exception ex)
             {
@@ -39,16 +39,16 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Cliente> Get(string id){
+        public ActionResult<Proveedor> Get(string id){
             try
             {
-                var cliente = _clienteService.GetClienteById(id);
+                var proveedor = _proveedorService.GetProveedorById(id);
 
-                if(cliente == null)
+                if(proveedor == null)
                 {
                     return NotFound();
                 }
-                return Ok(cliente);
+                return Ok(proveedor);
             }
             catch (Exception ex)
             {
@@ -64,18 +64,18 @@ namespace LabSoft.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] ClienteRequestDTO cliente) 
+        public ActionResult Post([FromBody] ProveedorRequestDTO proveedor) 
         {
             try
             {
-                if(cliente == null){
-                    return  BadRequest("El cliente no puede ser nulo");
+                if(proveedor == null){
+                    return  BadRequest("El proveedor no puede ser nulo");
                 }
 
-                var clienteMapeado = _mapper.Map<ClienteRequestDTO, Cliente>(cliente);
+                var proveedorMapeado = _mapper.Map<ProveedorRequestDTO, Proveedor>(proveedor);
 
-                _clienteService.AddCliente(clienteMapeado);
-                return CreatedAtAction(nameof(Get), new {id = clienteMapeado.Id}, cliente);
+                _proveedorService.AddProveedor(proveedorMapeado);
+                return CreatedAtAction(nameof(Get), new {id = proveedorMapeado.Id}, proveedor);
             }
             catch (Exception ex)
             {
@@ -91,31 +91,31 @@ namespace LabSoft.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] Cliente cliente)
+        public ActionResult Put(string id, [FromBody] Proveedor proveedor)
         {
-            if(cliente == null || cliente.Id != id) {
+            if(proveedor == null || proveedor.Id != id) {
                 return BadRequest();
             }
 
-            var clienteExistente = _clienteService.GetClienteById(id);
+            var proveedorExistente = _proveedorService.GetProveedorById(id);
 
-            if(clienteExistente == null){
+            if(proveedorExistente == null){
                 return NotFound();
             }
 
-            _clienteService.UpdateCliente(cliente);
+            _proveedorService.UpdateProveedor(proveedor);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(string id){
-            var cliente = _clienteService.GetClienteById(id);
+            var proveedor = _proveedorService.GetProveedorById(id);
 
-            if(cliente == null){
+            if(proveedor == null){
                 return NotFound();
             }
 
-            _clienteService.DeleteCliente(id);
+            _proveedorService.DeleteProveedor(id);
             return NoContent();
         }
     }

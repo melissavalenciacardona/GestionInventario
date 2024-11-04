@@ -18,12 +18,15 @@ namespace LabSoft.Data.Repositorio
 
         public List<Preferencia> GetPreferencia()
         {
-            throw new NotImplementedException();
+            var preferencias = _context.Preferencia.ToList();
+            return preferencias;
         }
 
         public Preferencia? GetPreferenciaById(string id)
         {
-            throw new NotImplementedException();
+            var result = _context.Preferencia
+            .FirstOrDefault(preferenciaId => preferenciaId.Id.Equals(id));
+            return result;
         }
     }
 }

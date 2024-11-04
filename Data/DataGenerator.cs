@@ -7,12 +7,26 @@ namespace LabSoft.Data
     {
         private static readonly Random Random = new Random();
 
-        public static string GenerateRandomName()
+        public static string GenerateRandomNombre()
         {
-            var names = new[] { "Juan Pérez", "María Gómez", "Pedro López", "Ana Martínez", "Luis Fernández", "Laura García", "Carlos Rodríguez", "Isabel González", "Javier Hernández", "Cristina Morales" };
-            return names[Random.Next(names.Length)];
+            var firstNames = new[] { "Juan", "María", "Pedro", "Ana", "Luis", "Laura", "Carlos", "Isabel", "Javier", "Cristina" };
+            return firstNames[Random.Next(firstNames.Length)];
         }
 
+        public static string GenerateRandomApellido()
+        {
+            var lastNames = new[] { "Pérez", "Gómez", "López", "Martínez", "Fernández", "García", "Rodríguez", "González", "Hernández", "Morales" };
+            return lastNames[Random.Next(lastNames.Length)];
+        }
+        public static string GenerateRandomTipoDocumento()
+        {
+            var tipos = new[] { "TI", "CC", "Pasaporte" };
+            return tipos[Random.Next(tipos.Length)];
+        }
+        public static string GenerateRandomNumeroDocumento()
+        {
+            return $"{Random.Next(10000000, 99999999)}";
+        }
         public static string GenerateRandomEmail(string name)
         {
             var domains = new[] { "example.com", "test.com", "demo.com" };
@@ -23,7 +37,10 @@ namespace LabSoft.Data
         {
             return $"+34 600 000 {Random.Next(100, 999)}";
         }
-
+        public static string GenerateRandomPassword()
+        {
+            return "123456";
+        }
         public static Direccion GenerateRandomAddress()
         {
             return new Direccion
