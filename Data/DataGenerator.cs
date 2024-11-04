@@ -9,25 +9,8 @@ namespace LabSoft.Data
 
         public static string GenerateRandomName()
         {
-            var names = new[] { "Juan", "María", "Pedro", "Ana", "Luis", "Laura", "Carlos", "Isabel", "Javier", "Cristina" };
+            var names = new[] { "Juan Pérez", "María Gómez", "Pedro López", "Ana Martínez", "Luis Fernández", "Laura García", "Carlos Rodríguez", "Isabel González", "Javier Hernández", "Cristina Morales" };
             return names[Random.Next(names.Length)];
-        }
-
-        public static string GenerateRandomLastName()
-        {
-            var lastNames = new[] { "García", "Rodríguez", "Martínez", "Hernández", "López", "Gómez", "Pérez", "Fernández", "González", "Morales" };
-            return lastNames[Random.Next(lastNames.Length)];
-        }
-
-        public static string GenerateRandomDNIType()
-        {
-            var types = new[] { "CC", "TI"};
-            return types[Random.Next(types.Length)];
-        }
-
-        public static string GenerateRandomDNI()
-        {
-            return $"{Random.Next(1000000, 9999999)}";
         }
 
         public static string GenerateRandomEmail(string name)
@@ -61,11 +44,6 @@ namespace LabSoft.Data
                 NotificacionPorSms = Random.Next(0, 2) == 0,
                 CanalPreferido = Random.Next(0, 2) == 0 ? "email" : "sms"
             };
-        }
-
-        public static string GenerateRandomPassword()
-        {
-            return Guid.NewGuid().ToString().Substring(0, 8);
         }
     }
 

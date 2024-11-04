@@ -9,7 +9,7 @@ namespace LabSoft.Data
         {
         }
 
-        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Direccion> Direccion { get; set; }
         public DbSet<Preferencia> Preferencia { get; set; }
 

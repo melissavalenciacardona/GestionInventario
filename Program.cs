@@ -21,13 +21,13 @@ var mapper = config.CreateMapper();
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton(mapper);  //Inyectar el mapper
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IUsuarioRepository, UsuarioMysqlRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>(); 
+builder.Services.AddScoped<IClienteRepository, ClienteMysqlRepository>();
+builder.Services.AddScoped<IPreferenciaRepository, PreferenciaRepository>();
 builder.Services.AddScoped<IDireccionRepository, DireccionRepository>();
 builder.Services.AddScoped<IDireccionService, DireccionService>();
-builder.Services.AddScoped<IPreferenciaRepository, PreferenciaRepository>();
 builder.Services.AddScoped<IPreferenciaService, PreferenciaService>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
 builder.Services.AddDbContext<MyDbContext>(options => {
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
