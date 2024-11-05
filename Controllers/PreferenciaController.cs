@@ -15,6 +15,24 @@ namespace LabSoft.Controllers
             _preferenciaService = preferenciaService;
         }
 
+        [HttpGet]
+        public ActionResult<List<Preferencia>> Get(){
+            try {
+                var preferencias = _preferenciaService.GetPreferencia();
+                return Ok(preferencias);
+
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //return BadRequest(ex.Message);
+                return StatusCode(500, 
+                    new {
+                            mensaje = "Ocurrio un error interno en el servidor", 
+                            detalles = ex.Message
+                        }
+                );
+            }
+        }
         [HttpGet("{id}")]
         public ActionResult<Preferencia> Get(string id){
             try
@@ -66,23 +84,5 @@ namespace LabSoft.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult<List<Preferencia>> Get(){
-            try {
-                var preferencias = _preferenciaService.GetPreferencia();
-                return Ok(preferencias);
-
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                //return BadRequest(ex.Message);
-                return StatusCode(500, 
-                    new {
-                            mensaje = "Ocurrio un error interno en el servidor", 
-                            detalles = ex.Message
-                        }
-                );
-            }
-        }
     }
 }

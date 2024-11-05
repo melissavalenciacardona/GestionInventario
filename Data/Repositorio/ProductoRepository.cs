@@ -1,22 +1,34 @@
 
 using Microsoft.EntityFrameworkCore;
 
+
 namespace LabSoft.Data.Repositorio
 {
     public class ProductoRepository : IProductoRepository
     {
         private readonly MyDbContext _context;
-
-        public ProductoRepository(MyDbContext context){
+        private readonly IMovimientoRepository _movimientoRepository;
+        public ProductoRepository(MyDbContext context, IMovimientoRepository movimientoRepository){
             _context = context;
+            _movimientoRepository = movimientoRepository;
         }
-
+        
         public void AddProducto(Producto producto)
         {
             producto.Id = Guid.NewGuid().ToString();
-            
             var result = _context.Producto.Add(producto);
             _context.SaveChanges();
+            
+            var movimiento = new Movimiento{
+                Id = Guid.NewGuid().ToString(),
+                ProductoId = producto.Id,
+                Motivo = "Creación de producto",
+                Cantidad = producto.Cantidad,
+                Fecha = DateTime.Now,
+                Tipo = "Entrada"
+            };
+            _movimientoRepository.AddMovimiento(movimiento);
+            
         }
 
         public void DeleteProducto(string id)

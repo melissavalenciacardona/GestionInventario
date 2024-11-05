@@ -15,6 +15,8 @@ namespace LabSoft.Data
 
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Proveedor> Proveedor { get; set; }
+
+        public DbSet<Movimiento> Movimiento { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
             optionsBuilder.UseMySQL();
         }

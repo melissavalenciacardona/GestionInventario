@@ -33,6 +33,14 @@ namespace LabSoft.Data.Repositorio
             .FirstOrDefault(usuarioId => usuarioId.Id.Equals(id));
             return usuario;
         }
+        public Usuario? GetUsuarioByEmail(string email)
+        {
+            var usuario = _context.Usuario
+            .Include(direccion => direccion.Direccion)
+            .Include(preferencia => preferencia.Preferencia)
+            .FirstOrDefault(usuarioEmail => usuarioEmail.Email.Equals(email));
+            return usuario;
+        }
         public List<Usuario> GetUsuarios()
         {
             var usuarios = _context.Usuario

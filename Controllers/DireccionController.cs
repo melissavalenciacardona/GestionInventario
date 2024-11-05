@@ -15,6 +15,25 @@ namespace LabSoft.Controllers
             _direccionService = direccionService;
         }
 
+        [HttpGet]
+        public ActionResult<List<Direccion>> Get(){
+            try {
+                var direcciones = _direccionService.GetDireccion();
+                return Ok(direcciones);
+
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                //return BadRequest(ex.Message);
+                return StatusCode(500, 
+                    new {
+                            mensaje = "Ocurrio un error interno en el servidor", 
+                            detalles = ex.Message
+                        }
+                );
+            }
+        }
+
         [HttpGet("{id}")]
         public ActionResult<Direccion> Get(string id){
             try
@@ -62,25 +81,6 @@ namespace LabSoft.Controllers
                         mensaje = "Ocurrio un error interno en el servidor",
                         detalles = ex.Message
                     }
-                );
-            }
-        }
-
-        [HttpGet]
-        public ActionResult<List<Direccion>> Get(){
-            try {
-                var direcciones = _direccionService.GetDireccion();
-                return Ok(direcciones);
-
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                //return BadRequest(ex.Message);
-                return StatusCode(500, 
-                    new {
-                            mensaje = "Ocurrio un error interno en el servidor", 
-                            detalles = ex.Message
-                        }
                 );
             }
         }

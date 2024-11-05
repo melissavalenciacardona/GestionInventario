@@ -16,6 +16,7 @@ namespace LabSoft.AutoMapperPrf
             CreateMap<Producto, ProductoResponseDTO>(); //Saca los datos de Producto y los mapea a ProductoResponseDTO
             CreateMap<ProveedorRequestDTO, Proveedor>(); //Saca los datos de ProveedorRequestDTO y los mapea a Proveedor
             CreateMap<Proveedor, ProveedorResponseDTO>(); //Saca los datos de Proveedor y los mapea a ProveedorResponseDTO
+            CreateMap<Movimiento, MovimientooResponseDTO>(); //Saca los datos de Movimiento y los mapea a MovimientoResponseDTO
         }
     }
 }

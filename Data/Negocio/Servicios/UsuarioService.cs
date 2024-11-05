@@ -19,11 +19,6 @@ namespace LabSoft.Data.Negocio.Servicios {
             _usuarioRepository.AddUsuario(usuario);
         }
 
-        public void DeleteUsuario(string id)
-        {
-            _usuarioRepository.DeleteUsuario(id);
-        }
-
         public Usuario? GetUsuarioById(string id)
         {
             return _usuarioRepository.GetUsuarioById(id);
@@ -32,6 +27,11 @@ namespace LabSoft.Data.Negocio.Servicios {
         public List<Usuario> GetUsuarios()
         {
             return _usuarioRepository.GetUsuarios();
+        }
+
+        public Usuario? GetUsuarioByEmail(string Email)
+        {
+            return _usuarioRepository.GetUsuarioByEmail(Email);
         }
 
         public void UpdateUsuario(Usuario usuario)
@@ -47,6 +47,20 @@ namespace LabSoft.Data.Negocio.Servicios {
                 _usuarioRepository.UpdateUsuario(usuarioUpd);
             }
             
+        }
+        public bool ValidateUsuario(string email, string password)
+        {
+            var usuario = _usuarioRepository.GetUsuarioByEmail(email);
+            if (usuario != null)
+            {
+                return usuario.Password == password;
+            }
+            return false;
+        }
+
+        public void DeleteUsuario(string id)
+        {
+            _usuarioRepository.DeleteUsuario(id);
         }
     }
 }
