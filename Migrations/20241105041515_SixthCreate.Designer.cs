@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabSoft.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20241104233301_FourthCreate")]
-    partial class FourthCreate
+    [Migration("20241105041515_SixthCreate")]
+    partial class SixthCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,6 +122,36 @@ namespace LabSoft.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Direccion");
+                });
+
+            modelBuilder.Entity("LabSoft.Data.Movimiento", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProductoId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("Movimiento");
                 });
 
             modelBuilder.Entity("LabSoft.Data.Preferencia", b =>
@@ -388,6 +418,17 @@ namespace LabSoft.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("LabSoft.Data.Movimiento", b =>
+                {
+                    b.HasOne("LabSoft.Data.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("LabSoft.Data.Producto", b =>

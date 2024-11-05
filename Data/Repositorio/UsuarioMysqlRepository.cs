@@ -54,5 +54,11 @@ namespace LabSoft.Data.Repositorio
             var result = _context.Usuario.Update(usuario);
             _context.SaveChanges();
         }
+
+        public bool ValidateUsuario(string email, string password)
+        {
+            var usuario = _context.Usuario.FirstOrDefault(usuarioEmail => usuarioEmail.Email.Equals(email) && usuarioEmail.Password.Equals(password));
+            return usuario != null;
+        }
     }
 }

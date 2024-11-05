@@ -45,6 +45,11 @@ namespace LabSoft.Data.Repositorio
             var usuario = usuarios.FirstOrDefault(c => c.Id == id);
             return usuario;
         }
+        public Usuario? GetUsuarioByEmail(string email)
+        {
+            var usuario = usuarios.FirstOrDefault(c => c.Email == email);
+            return usuario;
+        }
 
         public List<Usuario> GetUsuarios()
         {
@@ -59,6 +64,11 @@ namespace LabSoft.Data.Repositorio
                 usuarios[indice] = usuario;
             }
 
+        }
+        public bool ValidateUsuario(string email, string password)
+        {
+            var usuario = usuarios.FirstOrDefault(c => c.Email == email && c.Password == password);
+            return usuario != null;
         }
     }
 }
