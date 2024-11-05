@@ -9,6 +9,7 @@ namespace LabSoft.DTOs
         public string NumeroDocumento { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
+        public string Password { get; set; }
 
         public DireccionResponseDTO Direccion { get; set; }
         public PreferenciaResponseDTO Preferencia { get; set; }
