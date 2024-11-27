@@ -23,7 +23,6 @@ namespace LabSoft.Data.Repositorio
                 Id = Guid.NewGuid().ToString(),
                 ProductoId = producto.Id,
                 Motivo = "Creación de producto",
-                Cantidad = producto.Cantidad,
                 Fecha = DateTime.Now,
                 Tipo = "Entrada"
             };

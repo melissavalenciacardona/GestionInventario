@@ -36,8 +36,6 @@ namespace LabSoft.Data.Negocio.Servicios {
 
             if(productoUpd != null){
                 productoUpd.Nombre = producto.Nombre;
-                productoUpd.Precio = producto.Precio;
-                productoUpd.Cantidad = producto.Cantidad;
 
                 _productoRepository.UpdateProducto(productoUpd);
             }
