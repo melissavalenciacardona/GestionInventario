@@ -2,11 +2,13 @@ using AutoMapper;
 using LabSoft.Data;
 using LabSoft.Data.Negocio.Servicios;
 using LabSoft.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabSoft.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ProveedorController : ControllerBase
     {
@@ -19,6 +21,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<List<ProveedorResponseDTO>> Get(){
             try {
                 var proveedors = _proveedorService.GetProveedores();
@@ -39,6 +42,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult<Proveedor> Get(string id){
             try
             {
@@ -64,6 +68,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult Post([FromBody] ProveedorRequestDTO proveedor) 
         {
             try
@@ -91,6 +96,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Put(string id, [FromBody] Proveedor proveedor)
         {
             if(proveedor == null || proveedor.Id != id) {
@@ -108,6 +114,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Delete(string id){
             var proveedor = _proveedorService.GetProveedorById(id);
 

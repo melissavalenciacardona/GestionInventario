@@ -1,10 +1,12 @@
 using LabSoft.Data;
 using LabSoft.Data.Negocio.Servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabSoft.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class DireccionController : ControllerBase
     {
@@ -16,6 +18,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<List<Direccion>> Get(){
             try {
                 var direcciones = _direccionService.GetDireccion();
@@ -35,6 +38,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult<Direccion> Get(string id){
             try
             {
@@ -60,6 +64,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult Post([FromBody] Direccion direccion)
         {
             try

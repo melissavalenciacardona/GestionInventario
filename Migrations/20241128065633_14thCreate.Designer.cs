@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabSoft.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20241127223146_SeventhCreate")]
-    partial class SeventhCreate
+    [Migration("20241128065633_14thCreate")]
+    partial class _14thCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("LabSoft.Data.ApplicationUser", b =>
@@ -236,8 +236,14 @@ namespace LabSoft.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Apellido")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("longtext");
 
                     b.Property<string>("DireccionId")
@@ -248,6 +254,9 @@ namespace LabSoft.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -255,21 +264,42 @@ namespace LabSoft.Migrations
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NormalizedUserName")
                         .HasColumnType("longtext");
 
                     b.Property<string>("NumeroDocumento")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PreferenciaId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
@@ -277,6 +307,12 @@ namespace LabSoft.Migrations
 
                     b.Property<string>("TipoDocumento")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

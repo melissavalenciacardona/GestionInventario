@@ -2,11 +2,13 @@ using AutoMapper;
 using LabSoft.Data;
 using LabSoft.Data.Negocio.Servicios;
 using LabSoft.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabSoft.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ProductoController : ControllerBase
     {
@@ -19,6 +21,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<List<ProductoResponseDTO>> Get(){
             try {
                 var productos = _productoService.GetProductos();
@@ -39,6 +42,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult<Producto> Get(string id){
             try
             {
@@ -63,9 +67,8 @@ namespace LabSoft.Controllers
             }
         }
 
-
-
         [HttpPost]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult Post([FromBody] CreacionProductoRequestDTO producto) 
         {
             try
@@ -93,6 +96,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Put(string id, [FromBody] Producto producto)
         {
             if(producto == null || producto.Id != id) {
@@ -110,6 +114,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Delete(string id){
             var producto = _productoService.GetProductoById(id);
 

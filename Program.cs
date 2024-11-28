@@ -26,7 +26,7 @@ var mapper = config.CreateMapper();
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton(mapper);  //Inyectar el mapper
-
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioMysqlRepository>();
 builder.Services.AddScoped<IPreferenciaRepository, PreferenciaRepository>();
 builder.Services.AddScoped<IDireccionRepository, DireccionRepository>();
@@ -80,7 +80,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+builder.Services.AddDefaultIdentity<Usuario>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 }).AddRoles<IdentityRole>()

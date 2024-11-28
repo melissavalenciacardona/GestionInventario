@@ -1,10 +1,12 @@
 using LabSoft.Data;
 using LabSoft.Data.Negocio.Servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabSoft.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class MovimientoController : ControllerBase
     {
@@ -16,6 +18,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<List<Movimiento>> Get(){
             try {
                 var movimientos = _movimientoService.GetMovimiento();
@@ -35,6 +38,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet("{ProductoId}")]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult<List<Movimiento>> Get(string ProductoId){
             try
             {

@@ -8,7 +8,7 @@ using LabSoft.Data;
 namespace LabSoft.Controllers
 {
     [ApiController]
-    [Route("verification/[controller]")]
+    [Route("Login")]
     public class Autenticarcontroller : ControllerBase
     {
         private readonly IUsuarioService _usuarioService; //Instancias
@@ -32,7 +32,7 @@ namespace LabSoft.Controllers
                return BadRequest(new
                 {
                     Result = false,
-                    Errors = new List<string>() { "Password invalido!" }
+                    Errors = new List<string>() { "PasswordHash invalido!" }
                 });
             }
         }

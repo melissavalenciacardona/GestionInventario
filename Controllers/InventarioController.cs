@@ -1,10 +1,12 @@
 using LabSoft.Data;
 using LabSoft.Data.Negocio.Servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabSoft.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class InventarioController : ControllerBase
     {
@@ -16,6 +18,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet("Buscar/{criterio}&{valor}")]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult<List<Inventario>> Get(string criterio, string valor){
             try {
                 var inventarios = _inventarioService.Buscar(criterio, valor);
@@ -35,6 +38,7 @@ namespace LabSoft.Controllers
         }
         
         [HttpPost("Disminuir/{ProductoId}&{cantidad}&{motivo}")]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult<Inventario> Disminuir(string ProductoId, int cantidad, string motivo){
             try {
                 var inventarioActualizado = _inventarioService.Disminuir(ProductoId, cantidad, motivo);

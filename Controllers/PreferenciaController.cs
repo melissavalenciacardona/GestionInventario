@@ -1,10 +1,12 @@
 using LabSoft.Data;
 using LabSoft.Data.Negocio.Servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabSoft.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class PreferenciaController : ControllerBase
     {
@@ -16,6 +18,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<List<Preferencia>> Get(){
             try {
                 var preferencias = _preferenciaService.GetPreferencia();
@@ -34,6 +37,7 @@ namespace LabSoft.Controllers
             }
         }
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult<Preferencia> Get(string id){
             try
             {
@@ -59,6 +63,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN,AUXILIAR")]
         public ActionResult Post([FromBody] Preferencia preferencia)
         {
             try

@@ -30,16 +30,23 @@ namespace LabSoft.Data.Repositorio
                     Apellido = usuario.Apellido,
                     TipoDocumento = usuario.TipoDocumento,
                     NumeroDocumento = usuario.NumeroDocumento,
+                    UserName = usuario.Email,
                     Email = usuario.Email,
                     Telefono = usuario.Telefono,
                     FechaRegistro =  DateTime.Now,
                     Estado = "1",
-                    Password = usuario.Password,
+                    PasswordHash = usuario.PasswordHash,
                     DireccionId = usuario.DireccionId,
                     PreferenciaId = usuario.PreferenciaId
                 };
-
-                var isCreated = _userManager.CreateAsync(userExist, usuario.PasswordHash).Result;
+                try
+                {
+                    var isCreated = _userManager.CreateAsync(userExist, usuario.PasswordHash).Result;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
 
             var roleExist = _roleManager.RoleExistsAsync(roleName).Result;

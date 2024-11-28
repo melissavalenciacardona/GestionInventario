@@ -8,5 +8,7 @@ namespace LabSoft.Data.Repositorio
         int GetCantidadActual(string ProductoId);
         decimal GetPrecioActual(string ProductoId);
         Movimiento MovimientoIngreso (string ProductoId);
+        decimal CostoPromedio(string ProductoId);
+        decimal CostoTotal(string ProductoId);
     }
 }

@@ -2,6 +2,7 @@ using AutoMapper;
 using LabSoft.Data;
 using LabSoft.Data.Negocio.Servicios;
 using LabSoft.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LabSoft.Controllers
@@ -19,6 +20,7 @@ namespace LabSoft.Controllers
         }
 
         [HttpGet]
+        
         public ActionResult<List<UsuarioResponseDTO>> Get(){
             try {
                 var usuarios = _usuarioService.GetUsuarios();
@@ -74,7 +76,7 @@ namespace LabSoft.Controllers
 
                 var usuarioMapeado = _mapper.Map<UsuarioRequestDTO, Usuario>(usuario);
 
-                _usuarioService.AddUsuario(usuarioMapeado);
+                _usuarioService.AddUsuario(usuarioMapeado,usuario.RoleName);
                 return CreatedAtAction(nameof(Get), new {id = usuarioMapeado.Id}, usuario);
             }
             catch (Exception ex)

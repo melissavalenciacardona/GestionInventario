@@ -61,5 +61,23 @@ namespace LabSoft.Data.Repositorio
             var result = this.MovimientoIngreso(ProductoId);
             return result.Precio+100;
         }
+        public decimal CostoPromedio(string ProductoId)
+        {
+            var result = _context.Movimiento
+            .Where(movimiento => movimiento.ProductoId == ProductoId)
+            .Where(movimiento => movimiento.Tipo == "Entrada")
+            .ToList();
+            if (result.Count == 0)
+            {
+                return 0;
+            }
+            var promedio = result.Sum(movimiento => movimiento.Precio) / result.Sum(movimiento => movimiento.Cantidad);
+            return promedio;
+        }
+        public decimal CostoTotal(string ProductoId)
+        {
+            var total = this.GetCantidadActual(ProductoId) * this.CostoPromedio(ProductoId);
+            return total;
+        }
     }
 }

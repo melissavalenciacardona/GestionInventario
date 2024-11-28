@@ -30,7 +30,7 @@ namespace LabSoft.Data.Repositorio
                     NumeroDocumento = DataGenerator.GenerateRandomNumeroDocumento(),
                     Email = DataGenerator.GenerateRandomEmail(nombre),
                     Telefono = DataGenerator.GenerateRandomPhone(),
-                    Password = DataGenerator.GenerateRandomPassword(),
+                    PasswordHash = DataGenerator.GenerateRandomPassword(),
                     Direccion = DataGenerator.GenerateRandomAddress(),
                     FechaRegistro = DateTime.UtcNow.AddDays(-1),
                     Estado = "Activo",

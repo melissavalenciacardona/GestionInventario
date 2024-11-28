@@ -5,7 +5,7 @@
 namespace LabSoft.Migrations
 {
     /// <inheritdoc />
-    public partial class SixthCreate : Migration
+    public partial class _12thCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

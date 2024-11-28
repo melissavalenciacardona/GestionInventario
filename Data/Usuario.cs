@@ -13,7 +13,7 @@ namespace LabSoft.Data
         public string Telefono { get; set; }
         public DateTime FechaRegistro { get; set; }
         public string Estado { get; set; }
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public string DireccionId { get; set; }
         public string PreferenciaId { get; set; }
 

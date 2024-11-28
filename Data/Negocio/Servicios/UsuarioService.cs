@@ -50,6 +50,7 @@ namespace LabSoft.Data.Negocio.Servicios {
                 usuarioUpd.Apellido = usuario.Apellido;
                 usuarioUpd.Email = usuario.Email;
                 usuarioUpd.Telefono = usuario.Telefono;
+                usuarioUpd.Estado = usuario.Estado;
 
                 _usuarioRepository.UpdateUsuario(usuarioUpd);
             }
