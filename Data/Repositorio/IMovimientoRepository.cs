@@ -5,5 +5,8 @@ namespace LabSoft.Data.Repositorio
         List<Movimiento> GetMovimiento();
         List<Movimiento>? GetMovimientoById(string ProductoId);
         void AddMovimiento(Movimiento movimiento);
+        int GetCantidadActual(string ProductoId);
+        decimal GetPrecioActual(string ProductoId);
+        Movimiento MovimientoIngreso (string ProductoId);
     }
 }

@@ -6,19 +6,26 @@ namespace LabSoft.Data.Negocio.Servicios {
     {
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository){
-            this._usuarioRepository = usuarioRepository;
+        private readonly JwtConfig _jwtConfig;
+        private readonly JwtToken _jwtToken;
+        public UsuarioService(IUsuarioRepository usuarioRepository, JwtToken jwtToken){
+            _usuarioRepository = usuarioRepository;
+            _jwtToken = jwtToken;
         }
 
-        public void AddUsuario(Usuario usuario)
+        public void AddUsuario(Usuario usuario, string roleName)
         {
-            usuario.Id = Guid.NewGuid().ToString();
-            usuario.Estado = "1";
-            usuario.FechaRegistro = DateTime.Now;
-            
-            _usuarioRepository.AddUsuario(usuario);
+            _usuarioRepository.AddUsuario(usuario,  roleName);
         }
+        public string GenerarToken(Usuario usuario)
+        {
+            //Se obtienen los roles asignados al usuario en la tabla AspNetUserRoles
+            var userRoles = _usuarioRepository.GetRolesUsuario(usuario);
 
+            var jwtToken = _jwtToken.GenerarToken(usuario, userRoles);
+            return jwtToken;
+            
+        }
         public Usuario? GetUsuarioById(string id)
         {
             return _usuarioRepository.GetUsuarioById(id);
@@ -48,14 +55,11 @@ namespace LabSoft.Data.Negocio.Servicios {
             }
             
         }
-        public bool ValidateUsuario(string email, string password)
+        public bool ValidateUsuario(UsuarioLogin usuario)
         {
-            var usuario = _usuarioRepository.GetUsuarioByEmail(email);
-            if (usuario != null)
-            {
-                return usuario.Password == password;
-            }
-            return false;
+             var usuarioAutenticado = _usuarioRepository.ValidateUsuario(usuario);
+
+            return usuarioAutenticado;
         }
 
         public void DeleteUsuario(string id)

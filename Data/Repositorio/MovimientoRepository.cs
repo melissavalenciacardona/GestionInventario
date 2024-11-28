@@ -38,5 +38,28 @@ namespace LabSoft.Data.Repositorio
             .ToList();
             return result;
         }
+
+        public Movimiento MovimientoIngreso(string ProductoId)
+        {
+            var result = _context.Movimiento
+            .Include(producto => producto.Producto)
+            .ThenInclude(proveedor => proveedor.Proveedor)
+            .ThenInclude(direccion => direccion.Direccion)
+            .Where(movimiento => movimiento.ProductoId == ProductoId)
+            .FirstOrDefault();
+            return result;
+        }
+        public int GetCantidadActual(string ProductoId)
+        {
+            var result = _context.Movimiento
+            .Where(movimiento => movimiento.ProductoId == ProductoId)
+            .Sum(movimiento => movimiento.Cantidad);
+            return result;
+        }
+        public decimal GetPrecioActual(string ProductoId)
+        {
+            var result = this.MovimientoIngreso(ProductoId);
+            return result.Precio+100;
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace LabSoft.Data
         public DateTime Fecha { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
+        public decimal Total { get; set; }
         public string ProductoId { get; set; }
 
         public Producto Producto { get; set; }

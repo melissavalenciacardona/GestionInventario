@@ -10,7 +10,7 @@ namespace LabSoft.Data.Negocio.Servicios {
             this._productoRepository = productoRepository;
         }
 
-        public void AddProducto(Producto producto)
+        public void AddProducto(ProductoTemporal producto)
         {
             _productoRepository.AddProducto(producto);
         }

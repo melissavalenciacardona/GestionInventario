@@ -4,9 +4,11 @@ namespace LabSoft.Data.Repositorio
         List<Usuario> GetUsuarios();
         Usuario? GetUsuarioById(string id);
         Usuario? GetUsuarioByEmail(string email);
-        void AddUsuario(Usuario usuario);
+        void AddUsuario(Usuario usuario,string roleName);
         void UpdateUsuario(Usuario usuario);
-        bool ValidateUsuario(string email, string password);
+        bool ValidateUsuario(UsuarioLogin usuario);
         void DeleteUsuario(string id);
+        List<string> GetRolesUsuario(Usuario usuario);
+
     }
 }

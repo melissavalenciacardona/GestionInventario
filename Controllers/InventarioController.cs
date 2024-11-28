@@ -52,10 +52,10 @@ namespace LabSoft.Controllers
                 );
             }
         }
-        [HttpPost("Adicionar/{ProductoId}&{cantidad}&{motivo}")]
-        public ActionResult<Inventario> Adicionar(string ProductoId, int cantidad, string motivo){
+        [HttpPost("Adicionar/{ProductoId}&{cantidad}&{motivo}&{precio}")]
+        public ActionResult<Inventario> Adicionar(string ProductoId, int cantidad, string motivo, decimal precio){
             try {
-                var inventarioActualizado = _inventarioService.Adicionar(ProductoId, cantidad, motivo);
+                var inventarioActualizado = _inventarioService.Adicionar(ProductoId, cantidad, motivo, precio);
                 return Ok(inventarioActualizado);
 
             } catch (Exception ex)

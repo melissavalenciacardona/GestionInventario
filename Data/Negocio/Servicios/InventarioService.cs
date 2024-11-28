@@ -19,21 +19,16 @@ namespace LabSoft.Data.Negocio.Servicios {
             if (productoActual == null)
             {
                 throw new Exception("Producto no encontrado");
-            }
-            if (productoActual.Cantidad < cantidad)
-            {
-                throw new Exception("No hay suficiente cantidad de producto");
-            }
-            productoActual.Cantidad -= cantidad;
-
-            _productoRepository.UpdateProducto(productoActual);
-            
+            }         
+            var PrimerMovimiento = _movimientoRepository.MovimientoIngreso(ProductoId);   
             var movimiento = new Movimiento
             {
                 Id = Guid.NewGuid().ToString(),
                 ProductoId = productoActual.Id,
                 Motivo = motivo,
-                Cantidad = cantidad,
+                Precio = PrimerMovimiento.Precio + 100, // Se aumenta el precio en 100 para ganancia
+                Total = (PrimerMovimiento.Precio + 100) * cantidad,
+                Cantidad = -cantidad,
                 Fecha = DateTime.Now,
                 Tipo = "Salida"
             };
@@ -43,21 +38,19 @@ namespace LabSoft.Data.Negocio.Servicios {
             {
                 Nombre = productoActual.Nombre,
                 Categoria = productoActual.Categoria,
-                Cantidad = productoActual.Cantidad,
-                Precio = productoActual.Precio
+                Cantidad = movimiento.Cantidad,
+                Precio = movimiento.Precio
             };
 
         }
-        public Inventario Adicionar( string ProductoId, int cantidad, string motivo )
+        public Inventario Adicionar( string ProductoId, int cantidad, string motivo, decimal precio )
         {
             var productoActual = _productoRepository.GetProductoById(ProductoId);
             if (productoActual == null)
             {
                 throw new Exception("Producto no encontrado");
             }
-            productoActual.Cantidad += cantidad;
 
-            _productoRepository.UpdateProducto(productoActual);
             
             var movimiento = new Movimiento
             {
@@ -65,6 +58,8 @@ namespace LabSoft.Data.Negocio.Servicios {
                 ProductoId = productoActual.Id,
                 Motivo = motivo,
                 Cantidad = cantidad,
+                Precio = precio,
+                Total = precio * cantidad,
                 Fecha = DateTime.Now,
                 Tipo = "Entrada"
             };
@@ -74,8 +69,8 @@ namespace LabSoft.Data.Negocio.Servicios {
             {
                 Nombre = productoActual.Nombre,
                 Categoria = productoActual.Categoria,
-                Cantidad = productoActual.Cantidad,
-                Precio = productoActual.Precio
+                Cantidad = movimiento.Cantidad,
+                Precio = movimiento.Precio
             };
         }
         public List<Inventario> Buscar( string criterio, string valor )
@@ -96,8 +91,8 @@ namespace LabSoft.Data.Negocio.Servicios {
             {
                 Nombre = p.Nombre,
                 Categoria = p.Categoria,
-                Cantidad = p.Cantidad,
-                Precio = p.Precio
+                Cantidad = _movimientoRepository.GetCantidadActual(p.Id),
+                Precio = _movimientoRepository.GetPrecioActual(p.Id)
             }).ToList();
             
             return inventarios;

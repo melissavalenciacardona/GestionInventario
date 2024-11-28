@@ -4,8 +4,9 @@ namespace LabSoft.Data.Negocio.Servicios
         List<Usuario> GetUsuarios();
         Usuario? GetUsuarioById(string id);
         Usuario? GetUsuarioByEmail(string Email);
-        bool ValidateUsuario(string email, string password);
-        void AddUsuario(Usuario usuario);
+        bool ValidateUsuario(UsuarioLogin usuario);
+        string GenerarToken(Usuario usuario);
+        void AddUsuario(Usuario usuario, string roleName);
         void UpdateUsuario(Usuario usuario);
         void DeleteUsuario(string id);
     }

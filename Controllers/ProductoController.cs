@@ -63,8 +63,10 @@ namespace LabSoft.Controllers
             }
         }
 
+
+
         [HttpPost]
-        public ActionResult Post([FromBody] ProductoRequestDTO producto) 
+        public ActionResult Post([FromBody] CreacionProductoRequestDTO producto) 
         {
             try
             {
@@ -72,7 +74,7 @@ namespace LabSoft.Controllers
                     return  BadRequest("El producto no puede ser nulo");
                 }
 
-                var productoMapeado = _mapper.Map<ProductoRequestDTO, Producto>(producto);
+                var productoMapeado = _mapper.Map<CreacionProductoRequestDTO, ProductoTemporal>(producto);
 
                 _productoService.AddProducto(productoMapeado);
                 return CreatedAtAction(nameof(Get), new {id = productoMapeado.Id}, producto);

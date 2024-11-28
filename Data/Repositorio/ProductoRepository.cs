@@ -13,20 +13,30 @@ namespace LabSoft.Data.Repositorio
             _movimientoRepository = movimientoRepository;
         }
         
-        public void AddProducto(Producto producto)
+        public void AddProducto(ProductoTemporal producto)
         {
-            producto.Id = Guid.NewGuid().ToString();
-            var result = _context.Producto.Add(producto);
+            {
+            var productoNuevo = new Producto{
+                Id = Guid.NewGuid().ToString(),
+                Nombre = producto.Nombre,
+                ProveedorId = producto.ProveedorId,
+                Categoria = producto.Categoria,
+                FechaExpiracion = producto.FechaExpiracion,
+            };
+            var result = _context.Producto.Add(productoNuevo);
             _context.SaveChanges();
             
             var movimiento = new Movimiento{
                 Id = Guid.NewGuid().ToString(),
-                ProductoId = producto.Id,
+                ProductoId = productoNuevo.Id,
                 Motivo = "Creación de producto",
+                Cantidad = producto.Cantidad,
+                Precio = producto.Precio,
                 Fecha = DateTime.Now,
                 Tipo = "Entrada"
             };
             _movimientoRepository.AddMovimiento(movimiento);
+        }
             
         }
 
