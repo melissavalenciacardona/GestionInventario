@@ -42,6 +42,9 @@ builder.Services.AddScoped<IProveedorService, ProveedorService>();
 builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<IInventarioService, InventarioService>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddSingleton<JwtToken>();
 
 builder.Services.AddDbContext<MyDbContext>(options =>
@@ -51,7 +54,7 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -80,8 +83,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddDefaultIdentity<Usuario>(options =>
-{
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>{
     options.SignIn.RequireConfirmedAccount = false;
 }).AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<MyDbContext>()
@@ -116,6 +118,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+/**
+* End JWT Config
+**/
 
 var app = builder.Build();
 

@@ -233,14 +233,8 @@ namespace LabSoft.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("longtext");
 
                     b.Property<string>("DireccionId")
@@ -251,9 +245,6 @@ namespace LabSoft.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -261,42 +252,21 @@ namespace LabSoft.Migrations
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("NormalizedUserName")
                         .HasColumnType("longtext");
 
                     b.Property<string>("NumeroDocumento")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PreferenciaId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
@@ -304,12 +274,6 @@ namespace LabSoft.Migrations
 
                     b.Property<string>("TipoDocumento")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("UserName")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

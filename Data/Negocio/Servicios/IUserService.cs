@@ -3,7 +3,9 @@ namespace LabSoft.Data.Negocio
     public interface IUserService
     {
         List<ApplicationUser> GetUsuarios();
-        ApplicationUser? GetUsuarioById(string id);
-        void AddUsuario(ApplicationUser user);
+        ApplicationUser? GetUsuarioByEmail(string email);
+        void AddUsuario(ApplicationUser user, string roleName);
+        bool ValidarLogin(ApplicationUser user);
+        string GenerarToken(ApplicationUser user);
     }
 }

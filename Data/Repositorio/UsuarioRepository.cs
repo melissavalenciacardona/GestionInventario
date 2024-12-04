@@ -1,22 +1,10 @@
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-
 namespace LabSoft.Data.Repositorio
 {
     public class UsuarioRepository : IUsuarioRepository
     {
         private static readonly List<Usuario> usuarios = new List<Usuario>();
-        private readonly MyDbContext _context; //Todos los resposiotrios deben tener un contexto
-        private readonly UserManager<Usuario> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UsuarioRepository(MyDbContext context, UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            _context = context;
-            _userManager = userManager;
-            _roleManager = roleManager;
-        }
         static UsuarioRepository(){
             for (int i = 0; i < 5; i++)
             {
@@ -30,7 +18,7 @@ namespace LabSoft.Data.Repositorio
                     NumeroDocumento = DataGenerator.GenerateRandomNumeroDocumento(),
                     Email = DataGenerator.GenerateRandomEmail(nombre),
                     Telefono = DataGenerator.GenerateRandomPhone(),
-                    PasswordHash = DataGenerator.GenerateRandomPassword(),
+                    Password = DataGenerator.GenerateRandomPassword(),
                     Direccion = DataGenerator.GenerateRandomAddress(),
                     FechaRegistro = DateTime.UtcNow.AddDays(-1),
                     Estado = "Activo",
@@ -38,12 +26,8 @@ namespace LabSoft.Data.Repositorio
                 });
             }
         }
-        public List<string> GetRolesUsuario(Usuario usuario)
-        {
-            return _userManager.GetRolesAsync(usuario).Result.ToList();
-        }
 
-        public void AddUsuario(Usuario usuario, string roleName)
+        public void AddUsuario(Usuario usuario)
         {
             usuarios.Add(usuario);
         }
@@ -81,16 +65,10 @@ namespace LabSoft.Data.Repositorio
             }
 
         }
-        public bool ValidateUsuario(UsuarioLogin usuario)
+        public bool ValidateUsuario(string email, string password)
         {
-           var userFound = _userManager.FindByEmailAsync(usuario.Email).Result;
-
-            if (userFound == null){
-                return false;
-            }
-
-            var validatePassword = _userManager.CheckPasswordAsync(userFound, usuario.PasswordHash).Result;
-            return validatePassword;
+            var usuario = usuarios.FirstOrDefault(c => c.Email == email && c.Password == password);
+            return usuario != null;
         }
     }
 }

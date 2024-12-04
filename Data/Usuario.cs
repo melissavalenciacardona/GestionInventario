@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Identity;
-
 namespace LabSoft.Data
 {
-    public class Usuario : IdentityUser
+    public class Usuario
     {
         public string Id { get; set; }
         public string Nombre { get; set; }
@@ -13,7 +11,7 @@ namespace LabSoft.Data
         public string Telefono { get; set; }
         public DateTime FechaRegistro { get; set; }
         public string Estado { get; set; }
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
         public string DireccionId { get; set; }
         public string PreferenciaId { get; set; }
 

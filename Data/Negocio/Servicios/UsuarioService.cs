@@ -6,26 +6,19 @@ namespace LabSoft.Data.Negocio.Servicios {
     {
         private readonly IUsuarioRepository _usuarioRepository;
 
-        private readonly JwtConfig _jwtConfig;
-        private readonly JwtToken _jwtToken;
-        public UsuarioService(IUsuarioRepository usuarioRepository, JwtToken jwtToken){
-            _usuarioRepository = usuarioRepository;
-            _jwtToken = jwtToken;
+        public UsuarioService(IUsuarioRepository usuarioRepository){
+            this._usuarioRepository = usuarioRepository;
         }
 
-        public void AddUsuario(Usuario usuario, string roleName)
+        public void AddUsuario(Usuario usuario)
         {
-            _usuarioRepository.AddUsuario(usuario,  roleName);
-        }
-        public string GenerarToken(Usuario usuario)
-        {
-            //Se obtienen los roles asignados al usuario en la tabla AspNetUserRoles
-            var userRoles = _usuarioRepository.GetRolesUsuario(usuario);
-
-            var jwtToken = _jwtToken.GenerarToken(usuario, userRoles);
-            return jwtToken;
+            usuario.Id = Guid.NewGuid().ToString();
+            usuario.Estado = "1";
+            usuario.FechaRegistro = DateTime.Now;
             
+            _usuarioRepository.AddUsuario(usuario);
         }
+
         public Usuario? GetUsuarioById(string id)
         {
             return _usuarioRepository.GetUsuarioById(id);
@@ -50,17 +43,19 @@ namespace LabSoft.Data.Negocio.Servicios {
                 usuarioUpd.Apellido = usuario.Apellido;
                 usuarioUpd.Email = usuario.Email;
                 usuarioUpd.Telefono = usuario.Telefono;
-                usuarioUpd.Estado = usuario.Estado;
 
                 _usuarioRepository.UpdateUsuario(usuarioUpd);
             }
             
         }
-        public bool ValidateUsuario(UsuarioLogin usuario)
+        public bool ValidateUsuario(string email, string password)
         {
-             var usuarioAutenticado = _usuarioRepository.ValidateUsuario(usuario);
-
-            return usuarioAutenticado;
+            var usuario = _usuarioRepository.GetUsuarioByEmail(email);
+            if (usuario != null)
+            {
+                return usuario.Password == password;
+            }
+            return false;
         }
 
         public void DeleteUsuario(string id)

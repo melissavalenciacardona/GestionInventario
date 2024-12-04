@@ -1,6 +1,5 @@
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace LabSoft.Data.Repositorio
 {
@@ -8,66 +7,20 @@ namespace LabSoft.Data.Repositorio
     {
         private readonly MyDbContext _context; //Todos los resposiotrios deben tener un contexto
 
-        private readonly UserManager<Usuario> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-
-        public UsuarioMysqlRepository(MyDbContext context, UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager)
+        public UsuarioMysqlRepository(MyDbContext context) //Inyectando dependencia de la BD
         {
             _context = context;
-            _userManager = userManager;
-            _roleManager = roleManager;
         }
-        public void AddUsuario(Usuario usuario, string roleName)
+        public void AddUsuario(Usuario usuario)
         {
-           
-            var userExist = _userManager.FindByEmailAsync(usuario.Email).Result;
-
-            if (userExist == null){
-                userExist = new Usuario(){
-                    Id =  Guid.NewGuid().ToString(),
-                    Nombre = usuario.Nombre,
-                    Apellido = usuario.Apellido,
-                    TipoDocumento = usuario.TipoDocumento,
-                    NumeroDocumento = usuario.NumeroDocumento,
-                    UserName = usuario.Email,
-                    Email = usuario.Email,
-                    Telefono = usuario.Telefono,
-                    FechaRegistro =  DateTime.Now,
-                    Estado = "1",
-                    PasswordHash = usuario.PasswordHash,
-                    DireccionId = usuario.DireccionId,
-                    PreferenciaId = usuario.PreferenciaId
-                };
-                try
-                {
-                    var isCreated = _userManager.CreateAsync(userExist, usuario.PasswordHash).Result;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-
-            var roleExist = _roleManager.RoleExistsAsync(roleName).Result;
-
-            if (!roleExist){
-                var roleResult = _roleManager.CreateAsync(new IdentityRole(roleName)).Result;
-            }
-
-            var assignRoleResult = _userManager.AddToRoleAsync(userExist, roleName).Result;
+            var result = _context.Usuario.Add(usuario);
+            _context.SaveChanges();
         }
-        public List<string> GetRolesUsuario(Usuario usuario)
-        {
-            return _userManager.GetRolesAsync(usuario).Result.ToList();
-        }
-
         public void DeleteUsuario(string id)
         {
             var usuario = _context.Usuario.FirstOrDefault(usuarioId => usuarioId.Id.Equals(id));
 
-            if (usuario != null)
-            {
+            if(usuario != null){
                 _context.Usuario.Remove(usuario);
                 _context.SaveChanges();
             }
@@ -102,16 +55,10 @@ namespace LabSoft.Data.Repositorio
             _context.SaveChanges();
         }
 
-        public bool ValidateUsuario(UsuarioLogin usuario)
+        public bool ValidateUsuario(string email, string password)
         {
-           var userFound = _userManager.FindByEmailAsync(usuario.Email).Result;
-
-            if (userFound == null){
-                return false;
-            }
-
-            var validatePassword = _userManager.CheckPasswordAsync(userFound, usuario.PasswordHash).Result;
-            return validatePassword;
+            var usuario = _context.Usuario.FirstOrDefault(usuarioEmail => usuarioEmail.Email.Equals(email) && usuarioEmail.Password.Equals(password));
+            return usuario != null;
         }
     }
 }

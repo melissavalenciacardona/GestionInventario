@@ -15,7 +15,7 @@ namespace LabSoft.Data
         }
 
         // Metodo para generar el token
-        public string GenerarToken(Usuario user, List<string> userRoles)
+        public string GenerarToken(ApplicationUser user, List<string> userRoles)
         {
             //clase responsable de crear y escribir el token JWT.
             var jwtTokenHandler = new JwtSecurityTokenHandler();
@@ -93,6 +93,11 @@ namespace LabSoft.Data
             {
                 return string.Empty;
             }
+        }
+
+        internal string GenerarToken(Usuario usuario, List<string> userRoles)
+        {
+            throw new NotImplementedException();
         }
     }
 }
